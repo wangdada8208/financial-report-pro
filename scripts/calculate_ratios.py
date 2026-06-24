@@ -31,6 +31,7 @@ def ratio_change(data, key):
 def calculate(data):
     revenue = num(data, "revenue")
     cost = num(data, "cost_of_sales")
+    gross_profit = num(data, "gross_profit")
     net_profit = num(data, "net_profit")
     non_recurring = num(data, "non_recurring_net_profit")
     total_assets = num(data, "total_assets")
@@ -43,27 +44,38 @@ def calculate(data):
     current_assets = num(data, "current_assets")
     current_liabilities = num(data, "current_liabilities")
     cfo = num(data, "operating_cash_flow")
+    capex = num(data, "capex")
+    goodwill = num(data, "goodwill")
+    intangibles = num(data, "intangibles")
+    sbc = num(data, "stock_based_compensation")
 
-    gross_profit = None if revenue is None or cost is None else revenue - cost
-    average_assets = total_assets
-    average_equity = equity
+    if gross_profit is None and revenue is not None and cost is not None:
+        gross_profit = revenue - cost
+    free_cash_flow = None if cfo is None or capex is None else cfo - abs(capex)
+    net_cash_or_debt = None if cash is None or debt is None else cash - debt
 
     ratios = {
         "gross_margin": div(gross_profit, revenue),
         "net_margin": div(net_profit, revenue),
-        "roe": div(net_profit, average_equity),
+        "roe": div(net_profit, equity),
         "debt_to_asset_ratio": div(total_liabilities, total_assets),
         "current_ratio": div(current_assets, current_liabilities),
         "quick_ratio": div(None if current_assets is None or inventory is None else current_assets - inventory, current_liabilities),
         "cfo_to_net_profit": div(cfo, net_profit),
         "accrual_ratio": div(None if net_profit is None or cfo is None else net_profit - cfo, total_assets),
-        "asset_turnover": div(revenue, average_assets),
+        "asset_turnover": div(revenue, total_assets),
         "equity_multiplier": div(total_assets, equity),
         "non_recurring_profit_ratio": div(non_recurring, net_profit),
         "receivables_to_revenue": div(receivables, revenue),
         "inventory_to_revenue": div(inventory, revenue),
         "cash_to_revenue": div(cash, revenue),
         "interest_bearing_debt_to_assets": div(debt, total_assets),
+        "free_cash_flow": free_cash_flow,
+        "fcf_conversion": div(free_cash_flow, net_profit),
+        "capex_intensity": div(abs(capex) if capex is not None else None, revenue),
+        "net_cash_or_debt": net_cash_or_debt,
+        "goodwill_intangibles_to_assets": div((goodwill or 0) + (intangibles or 0), total_assets),
+        "sbc_to_revenue": div(sbc, revenue),
         "revenue_growth": ratio_change(data, "revenue"),
         "net_profit_growth": ratio_change(data, "net_profit"),
         "receivables_growth": ratio_change(data, "accounts_receivable"),

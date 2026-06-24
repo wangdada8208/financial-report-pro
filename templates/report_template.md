@@ -1,55 +1,66 @@
-# {{COMPANY_NAME}} {{REPORT_YEAR}} 财报投研风控分析
+# {{COMPANY_NAME}} Financial Report & Disclosure Risk Analysis
 
-报告日期：{{REPORT_DATE}}
+Profile: `{{PROFILE}}`  
+Report date: {{REPORT_DATE}}  
+Period/year: {{REPORT_YEAR}}
 
-## 1. 核心摘要
+## 1. Executive Summary
 
 {{SUMMARY}}
 
-## 2. 三表概要
+## 2. Three-Statement Overview
 
-| 指标 | 数值 | 同比/趋势 |
+| Metric | Value | YoY/trend |
 | :--- | :--- | :--- |
 {{STATEMENT_TABLE_ROWS}}
 
-## 3. 指标分析
+## 3. Core Ratios
 
-| 指标 | 数值 |
+| Metric | Value |
 | :--- | :--- |
 {{RATIO_TABLE_ROWS}}
 
-## 4. 盈利质量
+## 4. Earnings Quality
 
-综合评分：{{QUALITY_SCORE}}，判断：{{QUALITY_LABEL}}
+Composite score: {{QUALITY_SCORE}}  
+Judgment: {{QUALITY_LABEL}}
 
-| 指标 | 得分 | 判断 | 说明 |
+| Metric | Score | Judgment | Basis |
 | :--- | :--- | :--- | :--- |
 {{QUALITY_TABLE_ROWS}}
 
-## 5. 杜邦分解
+## 5. DuPont Decomposition
 
 {{DUPONT_TEXT}}
 
-## 6. 现金流与三表勾稽
+## 6. Cash Flow and Statement Linkage
 
 {{CASH_FLOW_TEXT}}
 
 {{LINKAGE_LINES}}
 
-## 7. 红旗检查
+## 7. Red-Flag Review
 
-综合风险等级：{{RED_FLAG_LEVEL}}
+Overall risk level: {{RED_FLAG_LEVEL}}
 
 {{RED_FLAG_LINES}}
 
-## 8. 图表
+## 8. SEC Filing Signals
+
+{{SEC_SUMMARY}}
+
+| Dimension | Score | Basis |
+| :--- | :--- | :--- |
+{{SEC_DIMENSION_ROWS}}
+
+## 9. Charts
 
 {{CHARTS}}
 
-## 9. 数据缺失说明
+## 10. Missing Data
 
 {{MISSING_FIELDS}}
 
-## 10. 风险与结论
+## 11. Risk Conclusion
 
-本报告基于可提取字段和规则化指标生成，结论用于投研风控初筛。若缺失字段较多，应回到原始财报核对三表、附注、审计意见和非经常性损益明细。
+This report is generated from extracted fields and rule-based heuristics for research and risk-screening support. It is not investment advice, accounting advice, or a substitute for reviewing original filings, notes, audit opinions, and subsequent disclosures.

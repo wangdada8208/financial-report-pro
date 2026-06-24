@@ -1,7 +1,7 @@
 interface:
   display_name: "Financial Report Pro"
-  short_description: "投研风控型财报提取、三表分析与报告生成"
-  default_prompt: "Use $financial-report-pro to analyze this financial report and generate a three-statement, earnings-quality, DuPont, and red-flag risk report."
+  short_description: "中美财报与 SEC 披露投研风控分析"
+  default_prompt: "Use $financial-report-pro to analyze this financial report or SEC filing and generate a cross-market disclosure risk report."
 
 policy:
   allow_implicit_invocation: true

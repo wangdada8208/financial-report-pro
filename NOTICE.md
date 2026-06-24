@@ -1,6 +1,6 @@
 # Notices and Attribution
 
-This repository contains `financial-report-pro`, a local Codex skill for financial report extraction, three-statement analysis, earnings-quality checks, DuPont decomposition, red-flag risk review, chart generation, and Markdown/HTML report rendering.
+This repository contains `financial-report-pro`, a local Codex skill for cross-market financial report extraction, three-statement analysis, earnings-quality checks, DuPont decomposition, red-flag risk review, SEC filing analysis, chart generation, and Markdown/HTML report rendering.
 
 ## Third-party sources
 
@@ -13,6 +13,11 @@ This skill includes code structure, formulas, workflow ideas, and analysis patte
 
 2. Vibe-Trading `financial-statement`
    - Source: https://github.com/HKUDS/Vibe-Trading/tree/main/agent/src/skills/financial-statement
+   - License: MIT License
+   - Copyright: Copyright (c) 2026 Vibe-Trading Contributors
+
+3. Vibe-Trading `edgar-sec-filings`
+   - Source: https://github.com/HKUDS/Vibe-Trading/tree/main/agent/src/skills/edgar-sec-filings
    - License: MIT License
    - Copyright: Copyright (c) 2026 Vibe-Trading Contributors
 

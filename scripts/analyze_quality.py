@@ -75,6 +75,10 @@ def red_flags(data, ratios):
     accrual_ratio = ratios.get("accrual_ratio")
     non_recurring_ratio = ratios.get("non_recurring_profit_ratio")
     debt_to_assets = ratios.get("interest_bearing_debt_to_assets")
+    fcf_conversion = ratios.get("fcf_conversion")
+    net_cash_or_debt = ratios.get("net_cash_or_debt")
+    goodwill_intangibles_to_assets = ratios.get("goodwill_intangibles_to_assets")
+    sbc_to_revenue = ratios.get("sbc_to_revenue")
 
     checks = []
 
@@ -98,6 +102,11 @@ def red_flags(data, ratios):
     add("应计利润占比高", accrual_ratio is not None and accrual_ratio > 0.1, "中", f"应计利润率={fmt_pct(accrual_ratio)}")
     add("扣非贡献偏低", non_recurring_ratio is not None and non_recurring_ratio < 0.7, "中", f"扣非/净利润={fmt_pct(non_recurring_ratio)}")
     add("有息负债率偏高", debt_to_assets is not None and debt_to_assets > 0.3, "中", f"有息负债/总资产={fmt_pct(debt_to_assets)}")
+    if data.get("market_profile") == "us":
+        add("FCF conversion 偏弱", fcf_conversion is not None and fcf_conversion < 0.3, "高", f"FCF/净利润={fmt_pct(fcf_conversion)}")
+        add("净债务状态", net_cash_or_debt is not None and net_cash_or_debt < 0, "中", f"净现金/净债务={net_cash_or_debt}")
+        add("商誉和无形资产占比高", goodwill_intangibles_to_assets is not None and goodwill_intangibles_to_assets > 0.3, "中", f"商誉+无形资产/总资产={fmt_pct(goodwill_intangibles_to_assets)}")
+        add("SBC 占收入偏高", sbc_to_revenue is not None and sbc_to_revenue > 0.1, "中", f"SBC/收入={fmt_pct(sbc_to_revenue)}")
 
     triggered = [check for check in checks if check["triggered"]]
     count = len(triggered)
@@ -134,6 +143,7 @@ def analyze(data, ratios):
     non_recurring = ratios.get("non_recurring_profit_ratio")
     cfo_growth = ratios.get("cfo_growth")
     inventory_growth = ratios.get("inventory_growth")
+    fcf_conversion = ratios.get("fcf_conversion")
 
     receivable_gap = None if receivables_growth is None or revenue_growth is None else receivables_growth - revenue_growth
     items = [
@@ -143,6 +153,8 @@ def analyze(data, ratios):
         {"name": "经营现金流趋势", "weight": 0.20, **score_item(cfo_growth, 0.0, -0.1)},
         {"name": "存货增长压力", "weight": 0.15, **score_item(inventory_growth, 0.0, 0.2, higher_is_better=False)},
     ]
+    if data.get("market_profile") == "us":
+        items.append({"name": "FCF/净利润", "weight": 0.25, **score_item(fcf_conversion, 0.8, 0.3)})
     score = weighted_score(items)
     if score is None:
         label = "无法评分"
